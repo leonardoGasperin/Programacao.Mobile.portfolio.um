@@ -71,11 +71,8 @@ interface HistoryItem {
 
 const saveToHistory = async (result: IMCResult) => {
   try {
-    // Get existing history
     const { value } = await Storage.get({ key: 'imc-history' });
     const history: HistoryItem[] = value ? JSON.parse(value) : [];
-
-    // Add new entry
     const newEntry: HistoryItem = {
       imc: result.imc,
       weight: parseFloat(weight.value),
@@ -84,9 +81,8 @@ const saveToHistory = async (result: IMCResult) => {
       date: new Date().toISOString()
     };
 
-    history.unshift(newEntry); // Add to beginning of array
+    history.unshift(newEntry);
     
-    // Save updated history
     await Storage.set({
       key: 'imc-history',
       value: JSON.stringify(history)
@@ -112,7 +108,6 @@ const calculateIMC = async () => {
 
   result.value = { imc, classification };
   
-  // Save to history after calculating
   await saveToHistory(result.value);
 };
 </script>

@@ -1,79 +1,83 @@
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar>
-        <ion-title>Perfil do Usuário</ion-title>
+      <ion-toolbar color="primary">
+        <ion-title class="ion-text-center">Perfil do Usuário</ion-title>
         <ion-buttons slot="end">
           <ion-button @click="openEditModal">Editar Perfil</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Perfil do Usuário</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      
-      <div class="profile-container" style="display: flex; justify-content: center; padding: 20px;">
-        <ion-card style="width: 100%; max-width: 400px; text-align: center;">
-          <ion-card-header>
-            <ion-avatar style="margin: 0 auto; width: 100px; height: 100px;">
-              <img :src="profileImage || 'https://placehold.co/100'" alt="Avatar do Usuário" />
-            </ion-avatar>
-            <ion-card-title style="margin-top: 10px;">{{ name }}</ion-card-title>
-            <ion-card-subtitle>Usuário Premium</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-            <p><strong>Email:</strong> {{ email }}</p>
-            <p><strong>Telefone:</strong> {{ phone }}</p>
-            <p><strong>Bio:</strong> {{ bio }}</p>
+    <ion-content :fullscreen="true" class="ion-padding">
+      <div class="profile-container">
+        <ion-card class="main-card">
+          <ion-card-content >
+            <div class="profile-header">
+              <ion-avatar class="profile-avatar">
+                <img :src="profileImage || 'https://placehold.co/100'" alt="Avatar do Usuário" />
+              </ion-avatar>
+              <h2 class="profile-name">{{ name }}</h2>
+              <p class="profile-type">Usuário Premium</p>
+            </div>
+
+            <div class="profile-info">
+              <p class="info-item"><strong>Email:</strong> {{ email }}</p>
+              <p class="info-item"><strong>Telefone:</strong> {{ phone }}</p>
+              <p class="info-item"><strong>Bio:</strong> {{ bio }}</p>
+            </div>
           </ion-card-content>
         </ion-card>
       </div>
       
       <ion-modal :is-open="isEditModalOpen">
-        <ng-template>
+        <div>
           <ion-header>
-            <ion-toolbar>
-              <ion-title>Editar Perfil</ion-title>
+            <ion-toolbar color="primary">
+              <ion-title class="ion-text-center">Editar Perfil</ion-title>
               <ion-buttons slot="end">
                 <ion-button @click="closeEditModal">Fechar</ion-button>
               </ion-buttons>
             </ion-toolbar>
           </ion-header>
           <ion-content style="height: 80vh;">
-            <div style="padding: 20px;">
-              <ion-item lines="none">
-                <ion-avatar slot="start" style="width: 100px; height: 100px; cursor:pointer" @click="triggerFileInput">
-                  <img :src="profileImage || 'https://placehold.co/100'" alt="Avatar do Usuário" />
-                </ion-avatar>
-                <ion-label>Alterar Imagem</ion-label>
-                <input ref="fileInput" type="file" accept="image/*" style="display:none" @change="onFileSelected">
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked">Nome</ion-label>
-                <ion-input v-model="name"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked">Email</ion-label>
-                <ion-input v-model="email"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked">Telefone</ion-label>
-                <ion-input v-model="phone"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked">Bio</ion-label>
-                <ion-textarea v-model="bio"></ion-textarea>
-              </ion-item>
-              <ion-button expand="block" style="margin-top: 20px;" @click="saveProfile">
-                Salvar
-              </ion-button>
-            </div>
+            <ion-card class="main-card">
+              <ion-card-content>
+                <ion-item lines="none" class="avatar-item">
+                  <ion-avatar slot="start" class="edit-avatar" @click="triggerFileInput">
+                    <img :src="profileImage || 'https://placehold.co/100'" alt="Avatar do Usuário" />
+                  </ion-avatar>
+                  <ion-label>Alterar Imagem</ion-label>
+                  <input ref="fileInput" type="file" accept="image/*" style="display:none" @change="onFileSelected">
+                </ion-item>
+
+                <ion-item lines="full">
+                  <ion-label position="floating">Nome</ion-label>
+                  <ion-input v-model="name" class="custom-input" style="margin-top: 5px;"></ion-input>
+                </ion-item>
+
+                <ion-item lines="full">
+                  <ion-label position="floating">Email</ion-label>
+                  <ion-input v-model="email" class="custom-input"></ion-input>
+                </ion-item>
+
+                <ion-item lines="full">
+                  <ion-label position="floating">Telefone</ion-label>
+                  <ion-input v-model="phone" class="custom-input"></ion-input>
+                </ion-item>
+
+                <ion-item lines="full">
+                  <ion-label position="floating">Bio</ion-label>
+                  <ion-textarea v-model="bio" class="custom-input"></ion-textarea>
+                </ion-item>
+
+                <ion-button expand="block" class="save-button" @click="saveProfile">
+                  Salvar
+                </ion-button>
+              </ion-card-content>
+            </ion-card>
           </ion-content>
-        </ng-template>
+        </div>
       </ion-modal>
     </ion-content>
   </ion-page>
@@ -88,9 +92,6 @@ import {
   IonTitle,
   IonContent,
   IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
   IonCardContent,
   IonAvatar,
   IonButton,
@@ -111,7 +112,6 @@ interface Profile {
   bio: string;
 }
 
-// Valores padrão do perfil
 const defaultProfile: Profile = {
   name: 'Nome do Usuário',
   email: 'usuario@example.com',
@@ -120,10 +120,8 @@ const defaultProfile: Profile = {
   profileImage: null
 };
 
-// Injeta o objeto de perfil (certifique-se de que o provider esteja configurado no pai)
 const profile = inject<Profile>('profile', defaultProfile) as Profile;
 
-// Variáveis reativas do perfil
 const profileImage = ref<string | null>(profile?.profileImage ?? defaultProfile.profileImage ?? null);
 const fileInput = ref<HTMLInputElement | null>(null);
 const name = ref<string>(profile?.name || defaultProfile.name);
@@ -177,7 +175,6 @@ async function loadProfile() {
   } catch (err) {
     console.warn('Nenhum perfil salvo encontrado, utilizando valores padrão.', err);
     
-    // Cria o arquivo com os valores padrão
     await Filesystem.writeFile({
       path: 'profile.json',
       data: JSON.stringify(defaultProfile),
@@ -219,3 +216,66 @@ onMounted(() => {
   loadProfile();
 });
 </script>
+
+<style scoped>
+.profile-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.main-card {
+  margin: 16px;
+  border-radius: 16px;
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-avatar {
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+}
+
+.profile-name {
+  color: var(--ion-color-primary);
+  font-size: 24px;
+  margin: 10px 0 5px;
+}
+
+.profile-type {
+  color: var(--ion-color-medium);
+  font-size: 16px;
+  margin: 0;
+}
+
+.profile-info {
+  text-align: left;
+}
+
+.info-item {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.edit-avatar {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+
+.avatar-item {
+  margin-bottom: 20px;
+}
+
+.save-button {
+  margin-top: 20px;
+}
+
+.custom-input {
+  --padding-start: 3px;
+  --padding-top: 25px;
+}
+</style>
