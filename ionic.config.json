@@ -1,0 +1,7 @@
+{
+  "name": "Programacao.Mobile.portfolio.um",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
