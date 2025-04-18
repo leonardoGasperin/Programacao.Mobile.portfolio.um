@@ -23,11 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, provide } from 'vue';
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
 import { personCircle, timeOutline, triangle } from 'ionicons/icons';
-import profileData from '@/assets/profile.json';
-
-const profile = reactive(profileData);
-provide('profile', profile);
 </script>
